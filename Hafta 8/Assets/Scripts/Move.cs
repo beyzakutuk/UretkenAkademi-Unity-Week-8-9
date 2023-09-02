@@ -6,8 +6,11 @@ public class Move : MonoBehaviour
 {
     private Rigidbody rb;
     public float speed = 1.5f;
-    bool _continue = true;
+    bool _continue=true;
     public float timeCount = 500;
+    public GameObject StartPanel;
+    public GameObject RetryPanel;
+    public GameObject FinishPanel;
 
 
     // Start is called before the first frame update
@@ -20,7 +23,7 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(_continue)
+        if(_continue && !StartPanel.gameObject.activeSelf)
         {
             timeCount -= Time.deltaTime;
             PlayerPrefs.SetFloat("timeCount", timeCount);
@@ -29,13 +32,14 @@ public class Move : MonoBehaviour
         if(timeCount < 0)
         {
             _continue = false;
+            RetryPanel.gameObject.SetActive(true);
         }
         
     }
 
     private void FixedUpdate()
     {
-        if(_continue)
+        if(_continue && !StartPanel.gameObject.activeSelf)
         {
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
@@ -52,6 +56,7 @@ public class Move : MonoBehaviour
         if (PlayerPrefs.GetFloat("can") == 0)
         {
             _continue = false;
+            RetryPanel.gameObject.SetActive(true);
         }
         
 
@@ -64,6 +69,7 @@ public class Move : MonoBehaviour
         {
             print("Oyunu Kazandiniz");
             _continue = false;
+            FinishPanel.gameObject.SetActive(true);
         }
     }
 }

@@ -30,16 +30,23 @@ public class Move : MonoBehaviour
 
             Vector3 kuvvet = new(z, 0, -1 * x);
             rb.AddForce(kuvvet * speed);
+
+            if(PlayerPrefs.GetFloat("can") == 0)
+            {
+                _continue = false;
+            }
         }
         else
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
+        
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        float count = 20;
         string _tag = other.gameObject.tag;
         if(_tag.Equals("finishLine"))
         {

@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class CanSayac : MonoBehaviour
 {
+    public AudioClip scoreClip;
+    public AudioClip bangClip;
+    private AudioSource audioSource;
+
     public float count = 20;
-    // Start is called before the first frame update
+    
     void Start()
     {
-        PlayerPrefs.SetFloat("can", count); 
+        PlayerPrefs.SetFloat("can", count);
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -23,12 +27,18 @@ public class CanSayac : MonoBehaviour
         if(_tag.Equals("duvar"))
         {
             count -= 1;
+
+            audioSource.PlayOneShot(bangClip);
+
             PlayerPrefs.SetFloat("can" , count);
         }
         else if(_tag.Equals("can"))
         {
-            Destroy(other.gameObject);
             count += 1;
+
+            audioSource.PlayOneShot(scoreClip);
+
+            Destroy(other.gameObject);
             PlayerPrefs.SetFloat("can", count);
         }
     }

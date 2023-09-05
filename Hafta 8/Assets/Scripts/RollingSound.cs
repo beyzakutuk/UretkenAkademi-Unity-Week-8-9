@@ -14,10 +14,9 @@ public class RollingSound : MonoBehaviour
     public GameObject StartPanel;
     bool isRolling;
 
-    // Bu değişkenler ses seviyesini kontrol etmek için kullanılacak.
-    private float minVolume = 0.1f; // Minimum ses seviyesi
-    private float maxVolume = 1.0f; // Maximum ses seviyesi
-    private float targetVolume; // Hedef ses seviyesi
+    private float minVolume = 0.1f; 
+    private float maxVolume = 0.3f; 
+    private float targetVolume; 
 
     void Start()
     {
@@ -25,7 +24,7 @@ public class RollingSound : MonoBehaviour
         audio = GetComponent<AudioSource>();
         isRolling = false;
 
-        audio.volume = minVolume; // Başlangıçta minimum ses seviyesi
+        audio.volume = minVolume; 
         targetVolume = minVolume;
     }
 
@@ -33,7 +32,7 @@ public class RollingSound : MonoBehaviour
     {
         if (rb.velocity.magnitude <= rollingThreshold)
         {
-            // Top hareket etmiyorsa ve daha önce hareket ediyorsa sesi durdur.
+            // Top hareket etmiyorsa
             if (isRolling)
             {
                 // Ses seviyesini yavaşça minimuma ayarla
@@ -50,7 +49,6 @@ public class RollingSound : MonoBehaviour
 
             if (!isRolling)
             {
-                // Top hareket etmeye başladığında sesi çal.
                 audio.PlayOneShot(rollingSound);
                 isRolling = true;
             }
@@ -60,10 +58,9 @@ public class RollingSound : MonoBehaviour
                 lastRollingTime = Time.time;
                 GetComponent<AudioSource>().PlayOneShot(rollingSound);
             }
-            // Ses seviyesini yavaşça maksimuma ayarla
             targetVolume = maxVolume;
         }
-        // Ses seviyesini hedefe yavaşça yaklaştır
-        audio.volume = Mathf.Lerp(audio.volume, targetVolume, Time.deltaTime * 2.0f);
+        
+        audio.volume = Mathf.MoveTowards(audio.volume, targetVolume, Time.deltaTime * 2.0f);
     }
 }

@@ -11,7 +11,6 @@ public class ButtonSettings : MonoBehaviour
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -20,6 +19,7 @@ public class ButtonSettings : MonoBehaviour
     public GameObject StartPanel;
     public GameObject FinishPanel;
     public GameObject RetryPanel;
+    public GameObject VolumePanel;
 
     public void PlayOnClick()
     {
@@ -34,5 +34,15 @@ public class ButtonSettings : MonoBehaviour
     public void RetryOnClick()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void SoundOnClick()
+    {
+        VolumePanel.gameObject.SetActive(true);
+    }
+
+    public void CloseOnClick()
+    {
+        VolumePanel.gameObject.SetActive(false);
     }
 }
